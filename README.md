@@ -94,7 +94,7 @@ As easy as macOS:
 
 Use [Chocolatey](https://chocolatey.org/); however, I’ve not gotten this to work for, e.g., compiling XS modules.
 
-# Big-Endian
+# Linux, Big-Endian
 
 The magic of [QEMU](https://qemu.org) makes this possible …
 
@@ -108,6 +108,10 @@ The magic of [QEMU](https://qemu.org) makes this possible …
       - name: Run tests on s390x/ubuntu
         run: docker run --rm --interactive s390x/ubuntu bash -c "git clone --recurse-submodules $GITHUB_SERVER_URL/$GITHUB_REPOSITORY; cd $( echo $GITHUB_REPOSITORY | cut -d/ -f2 ); curl -L https://cpanmin.us | perl - --notest --installdeps .; perl Makefile.PL; make; prove -wlvmb t"
 ```
+
+# Linux, 32-bit
+
+Just tweak the big-endian example above to say `arm32v7` rather than `s390x`.
 
 # Linux, long-double & quadmath
 
