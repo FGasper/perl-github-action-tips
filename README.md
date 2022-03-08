@@ -143,6 +143,10 @@ This is ugly, but it works:
   cygwin:
     runs-on: windows-latest
 
+    defaults:
+      run:
+        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
+
     steps:
       - name: Set up Cygwin
         uses: egor-tensin/setup-cygwin@v3
@@ -153,23 +157,16 @@ This is ugly, but it works:
         with:
           submodules: recursive
       - run: perl -V
-        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
       - run: cpan App::cpanminus
-        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
       - name: Install Dependencies
         run: cd $GITHUB_WORKSPACE; cpanm --verbose --notest --installdeps --with-configure --with-develop .
-        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
       - name: perl Makefile.PL
         run: cd $GITHUB_WORKSPACE; perl Makefile.PL
-        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
       - name: make
         run: cd $GITHUB_WORKSPACE; make
-        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
       - name: prove -wlvmb t
         run: cd $GITHUB_WORKSPACE; make test
-        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
 ```
-There’s probably a better approach than having to give that `shell` on each step … ?
 
 Note the `with`.`packages`; see Cygwin’s package repository for names of available packages. (Unlike plain Windows, this _does_ work seamlessly to text XS modules’ integrations with external C libraries.)
 
