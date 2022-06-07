@@ -12,6 +12,7 @@ See below …
       fail-fast: false
       matrix:
         perl-version:
+          - '5.36'
           - '5.34'
           - '5.32'
           - '5.30'
@@ -30,7 +31,7 @@ See below …
       image: perldocker/perl-tester:${{ matrix.perl-version }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@main
         with:
             submodules: recursive
       - run: perl -V
@@ -153,7 +154,7 @@ This is ugly, but it works:
         with:
             platform: x64
             packages: perl_base perl-ExtUtils-MakeMaker make gcc-g++ libcrypt-devel libnsl-devel bash
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@main
         with:
           submodules: recursive
       - run: perl -V
@@ -175,7 +176,7 @@ Note the `with`.`packages`; see Cygwin’s package repository for names of avail
   freebsd:
     runs-on: macos-10.15
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
     - uses: vmactions/freebsd-vm@v0.1.6
       with:
         prepare: pkg install -y p5-ExtUtils-PkgConfig  # demonstration
