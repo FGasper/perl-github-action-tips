@@ -93,7 +93,7 @@ As easy as macOS:
 
 ## External Dependencies
 
-Use [Chocolatey](https://chocolatey.org/); however, I’ve not gotten this to work for, e.g., compiling XS modules.
+Use [Chocolatey](https://chocolatey.org/); however, I’ve not gotten this to work for, e.g., linking XS modules against other C libraries.
 
 # Linux, Big-Endian
 
@@ -166,7 +166,7 @@ This is ugly, but it works:
 
     steps:
       - name: Set up Cygwin
-        uses: egor-tensin/setup-cygwin@v3
+        uses: egor-tensin/setup-cygwin@master
         with:
             platform: x64
             packages: perl_base perl-ExtUtils-MakeMaker make gcc-g++ libcrypt-devel libnsl-devel bash
@@ -187,20 +187,36 @@ This is ugly, but it works:
 
 Note the `with`.`packages`; see Cygwin’s package repository for names of available packages. (Unlike plain Windows, this _does_ work seamlessly to text XS modules’ integrations with external C libraries.)
 
-# FreeBSD
+# FreeBSD & OpenBSD
+
 ```
-  freebsd:
-    runs-on: macos-10.15
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - name: freebsd
+            version: '13.0'
+            pkginstall: pkg install -y p5-ExtUtils-MakeMaker
+          - name: openbsd
+            version: '7.1'
+            pkginstall: pkg_add p5-ExtUtils-MakeMaker
+
     steps:
-    - uses: actions/checkout@main
-    - uses: vmactions/freebsd-vm@v0.1.6
-      with:
-        prepare: pkg install -y p5-ExtUtils-PkgConfig  # demonstration
-        run: |
-            perl -V
-            curl -L https://cpanmin.us | perl - --notest --installdeps .
+      - uses: actions/checkout@main
+        with:
+          submodules: recursive
+      - name: Test on ${{ matrix.os.name }}
+        uses: cross-platform-actions/action@master
+        with:
+          operating_system: ${{ matrix.os.name }}
+          version: ${{ matrix.os.version }}
+          shell: bash
+          run: |
+            sudo ${{ matrix.os.pkginstall }}
+            curl -L https://cpanmin.us | sudo perl - --verbose --notest --installdeps --with-configure --with-develop .
             perl Makefile.PL
             make
             prove -wlvmb t
+
 ```
 Note the `prepare` statement to install any external dependencies; it may not be needed for your case.
