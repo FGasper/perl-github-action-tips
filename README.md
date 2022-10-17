@@ -114,6 +114,22 @@ The magic of [QEMU](https://qemu.org) makes this possible …
 
 Just tweak the big-endian example above to say `arm32v7` rather than `s390x`.
 
+# Linux, [musl libc](musl libc)
+
+Sometimes it’s useful to test against “alternative” libc implementations. [Alpine Linux](https://www.alpinelinux.org/) has you covered:
+
+```
+  musl:
+    runs-on: ubuntu-latest
+    
+    container:
+      image: alpine
+      
+    steps:
+      - run: apk add perl-app-cpanminus
+      # ...
+```
+
 # Linux, long-double & quadmath
 
 Via [unofficial builds courtesy of simcop2387](https://hub.docker.com/r/simcop2387/perl-tester/tags):
