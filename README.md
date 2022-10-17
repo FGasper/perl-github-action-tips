@@ -219,4 +219,4 @@ Note the `with`.`packages`; see Cygwin’s package repository for names of avail
             prove -wlvmb t
 
 ```
-Note the `prepare` statement to install any external dependencies; it may not be needed for your case.
+Note the `pkginstall` option to install any external dependencies; it may not be needed for your case.
