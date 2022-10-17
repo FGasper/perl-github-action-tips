@@ -114,7 +114,7 @@ The magic of [QEMU](https://qemu.org) makes this possible …
 
 Just tweak the big-endian example above to say `arm32v7` rather than `s390x`.
 
-# Linux, [musl libc](musl libc)
+# Linux, [musl libc](https://musl.libc.org)
 
 Sometimes it’s useful to test against “alternative” libc implementations. [Alpine Linux](https://www.alpinelinux.org/) has you covered:
 
