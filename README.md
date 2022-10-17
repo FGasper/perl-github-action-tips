@@ -220,3 +220,5 @@ Note the `with`.`packages`; see Cygwin’s package repository for names of avail
 
 ```
 Note the `pkginstall` option to install any external dependencies; it may not be needed for your case.
+
+Also, FreeBSD does have a `p5-App-cpanminus` port, but OpenBSD has no such port.
