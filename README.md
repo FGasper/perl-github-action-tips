@@ -40,7 +40,7 @@ See below …
       - run: make
       - run: prove -wlvmb t
 ```
-Assuming your module only depends on CPAN modules, the above will test it against all standard perls from 5.10 to 5.34.
+Assuming your module only depends on CPAN modules, the above will test it against all standard perls from 5.10 to 5.36.
 
 ## External Dependencies
 
