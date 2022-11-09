@@ -35,7 +35,7 @@ See below …
         with:
             submodules: recursive
       - run: perl -V
-      - run: cpanm --notest --installdeps .
+      - run: cpanm --notest --installdeps --verbose .
       - run: perl Makefile.PL
       - run: make
       - run: prove -wlvmb t
@@ -107,7 +107,7 @@ The magic of [QEMU](https://qemu.org) makes this possible …
       - name: Get the qemu container
         run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Run tests on s390x/ubuntu
-        run: docker run --rm --interactive s390x/ubuntu bash -c "apt update; apt install -y git cpanminus make; git clone --recurse-submodules $GITHUB_SERVER_URL/$GITHUB_REPOSITORY; cd $( echo $GITHUB_REPOSITORY | cut -d/ -f2 ); cpanm --notest --installdeps .; perl Makefile.PL; make; prove -wlvmb t"
+        run: docker run --rm --interactive s390x/ubuntu bash -c "apt update; apt install -y git cpanminus make; git clone --recurse-submodules $GITHUB_SERVER_URL/$GITHUB_REPOSITORY; cd $( echo $GITHUB_REPOSITORY | cut -d/ -f2 ); cpanm --notest --installdeps --verbose .; perl Makefile.PL; make; prove -wlvmb t"
 ```
 
 # Linux, 32-bit
