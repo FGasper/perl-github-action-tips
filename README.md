@@ -155,34 +155,26 @@ Check [simcop2387’s perl containers](https://hub.docker.com/r/simcop2387/perl/
 
 # Cygwin
 
-This is ugly, but it works:
 ```
   cygwin:
     runs-on: windows-latest
 
-    defaults:
-      run:
-        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
-
     steps:
       - name: Set up Cygwin
-        uses: egor-tensin/setup-cygwin@master
+        uses: cygwin/cygwin-install-action@master
         with:
-            platform: x64
             packages: perl_base perl-ExtUtils-MakeMaker make gcc-g++ libcrypt-devel libnsl-devel bash
       - uses: actions/checkout@main
         with:
           submodules: recursive
-      - run: perl -V
-      - run: cpan App::cpanminus
-      - name: Install Dependencies
-        run: cd $GITHUB_WORKSPACE; cpanm --verbose --notest --installdeps --with-configure --with-develop .
-      - name: perl Makefile.PL
-        run: cd $GITHUB_WORKSPACE; perl Makefile.PL
-      - name: make
-        run: cd $GITHUB_WORKSPACE; make
-      - name: prove -wlvmb t
-        run: cd $GITHUB_WORKSPACE; make test
+      - shell: C:\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
+        run: |
+            perl -V
+            cpan -T App::cpanminus
+            cd $GITHUB_WORKSPACE
+            cpanm --verbose --notest --installdeps --with-configure --with-develop .
+            perl Makefile.PL
+            make test
 ```
 
 Note the `with`.`packages`; see Cygwin’s package repository for names of available packages. (Unlike plain Windows, this _does_ work seamlessly to text XS modules’ integrations with external C libraries.)
