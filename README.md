@@ -182,6 +182,9 @@ Note the `with`.`packages`; see Cygwin’s package repository for names of avail
 # FreeBSD & OpenBSD
 
 ```
+  BSDs:
+    runs-on: macos-latest
+  
     strategy:
       fail-fast: false
       matrix:
